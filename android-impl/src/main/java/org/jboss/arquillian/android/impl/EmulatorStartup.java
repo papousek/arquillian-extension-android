@@ -159,9 +159,9 @@ public class EmulatorStartup {
             // }
 
             List<String> props = executor
-                    .execute(sdk.getAdbPath(), "-s", connectedDevice.getSerialNumber(), "shell", "getprop");
+                    .execute(sdk.getAdbPath(), "-s", connectedDevice.getSerialNumber(), "shell", "getprop ro.runtime.firstboot");
             for (String line : props) {
-                if (line.contains("[ro.runtime.firstboot]")) { // boot is completed
+                if (!line.trim().isEmpty()) { // boot is completed
                     log.info("Device boot completed after " + (timeout * 1000 - timeLeft) + " milliseconds");
                     return;
                 }
